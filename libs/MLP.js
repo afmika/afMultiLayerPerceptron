@@ -98,14 +98,15 @@ MLP.prototype = {
             }
             tmp_neurons.forEach(neuron => {
                neuron.setInput(input);
-               var output = 0;
-               if(i+1 == this.n_layers) {
+               var output = neuron.getSigmoidOutput();
+               /*if(i+1 == this.n_layers) {
                    // couche de sortie
                     output = neuron.getSigmoidOutput();
                } else {
                    // couche intermediaire
                     output = neuron.getScalarProductOutput();
                }
+			   */
                out.push(output);
                if(_debug) {
                     console.log(neuron.getInfos().neuron_index, "=> x ", neuron.input, " w", neuron.weight, " out ", output);
@@ -152,7 +153,6 @@ MLP.prototype = {
                         }
                         // permettra de garder son delta pour la couche qui lui precede
                         neuron_j.minidelta = delta_j;
-
                         var noperation = neuron_j.weight.length;
                         for (let i = 0; i < noperation; i++) {
                             if(q == 0) {
