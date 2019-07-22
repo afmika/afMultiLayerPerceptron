@@ -1,3 +1,6 @@
+/**
+ * @author afmika July 2019
+ **/
 function product(u, v) {
     if(u.length != v.length) {
         throw "Different vector length!";

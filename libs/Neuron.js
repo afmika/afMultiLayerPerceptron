@@ -1,3 +1,6 @@
+/**
+ * @author afmika July 2019
+ **/
 function Neuron(dataLength) {
     this.dataLength = dataLength || 0;
     this.weight = [];

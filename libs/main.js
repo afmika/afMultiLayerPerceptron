@@ -1,4 +1,6 @@
-
+/**
+ * @author afmika July 2019
+ **/
 //console.log(mlp.getNeuron(0, 1));
 function generateRandomDatas(input_length, output_length, numberOfdatas){
     var datas = [];

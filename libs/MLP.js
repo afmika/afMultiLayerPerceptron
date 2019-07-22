@@ -1,3 +1,6 @@
+/**
+ * @author afmika July 2019
+ **/
 function MLP(config){
     // ex: [4, 3, 3, 2, 1]
     this.n_neuron_per_layers = config.n_neuron_per_layers;
