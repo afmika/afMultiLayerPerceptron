@@ -154,7 +154,6 @@ MLP.prototype = {
                         neuron_j.minidelta = delta_j;
 
                         var noperation = neuron_j.weight.length;
-                        var bigdelta_j = 0;
                         for (let i = 0; i < noperation; i++) {
                             if(q == 0) {
                                 // premiere couche
