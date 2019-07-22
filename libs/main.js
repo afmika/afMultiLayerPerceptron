@@ -30,8 +30,9 @@ function generateRandomDatas(input_length, output_length, numberOfdatas){
     return datas;
 }
 function doTest() {
-    // 3 couches
-    // 1 c. entree, 1 c. cache, 2 c. sortie
+    // K couches
+    //  c. entree(le premier indice), ..., ... , c. sortie 
+	// (le dernier indice => doit etre de meme nombre que l output)
     var mlp = new MLP({
         n_neuron_per_layers : [7, 12, 12, 10],
         n_inputs : 4
@@ -52,8 +53,6 @@ function doTest() {
     var epoques = 3000;
     var taux_app = 0.01; // plus c est petit => plus c est precis
     mlp.train(epoques, taux_app);
-
-
 
     var datas = mlp.getTrainingdatas();
     //console.log(datas);

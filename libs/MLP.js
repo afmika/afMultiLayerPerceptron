@@ -89,7 +89,6 @@ MLP.prototype = {
                 // output de la couche precedente
                 input = out;
             }
-
             if(i+1 <= this.n_layers) {
                 out = [];
             }
@@ -112,7 +111,6 @@ MLP.prototype = {
                     console.log(neuron.getInfos().neuron_index, "=> x ", neuron.input, " w", neuron.weight, " out ", output);
                }
             });
-
         }
         return out;
     },
