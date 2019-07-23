@@ -23,6 +23,7 @@ function H(s) {
 function sigmoid(s) {
     return 1 / (1 + Math.exp(-s));
 }
+
 // Neuron class
 function Neuron(dataLength) {
     this.dataLength = dataLength || 0;
@@ -68,3 +69,4 @@ Neuron.prototype = {
         return sigmoid(this.getScalarProductOutput());
     }
 }
+module.exports = Neuron;

@@ -1,13 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>Neuron</title>
-    </head>
-    <body>
-        <script type="text/javascript" src="libs/Tools.js"></script>
-        <script type="text/javascript" src="libs/Neuron.js"></script>
-        <script type="text/javascript" src="libs/MLP.js"></script>
-        <script type="text/javascript" src="libs/main.js"></script>
+<head>
+	<title>Reconnaissance Forme afmika</title>
+	<style>
+	div {
+		padding-left: 10px;
+	}
+	canvas {
+		box-shadow: 6px 1px 8px 4px;
+	}
+	.gauche {
+		float: left;
+		width: 450px;
+		height: 500px;
+	}
+	.droite {
+		margin-left: 200px;
+		width: 500px;
+		height: 200px;
+	}
+	.contenu {
+		margin: 0 auto;
+	}
+	</style>
+</head>
+	<body>
+		<div class="contenu">
+			<div class="gauche">
+
+					<canvas id="canvas" width="400" height="400" style="border: 2px Solid Black;">
+					</canvas>
+					<h3>Reconnaissance de Forme v.2 : afmika</h3>
+					<button onclick="addDataToLearn()">Ajouter le dessin</button>
+					<button onclick="reinitDrawing()">Reinitialiser le dessin</button>	
+				<p id="infos"></p>
+					<br/>
+			</div>
+			<div class="droite">
+				<div class="contenu_droit">
+					<button id="btn" onclick="learnEverything()">Apprendre TOUT!</button>
+					<button onclick="reinitAllData()">Reinitialiser les donnees</button>
+						<br/>
+						<br/>
+					<button onclick="testData()">Tester la nature de la donnee</button>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="libs/Tools.js"></script>
+		<script type="text/javascript" src="libs/Neuron.js"></script>
+		<script type="text/javascript" src="libs/MLP.js"></script>
+		<script type="text/javascript" src="libs/main.js"></script>
+		<script type="text/javascript" src="Perceptron.js"></script>
+		<script type="text/javascript" src="draw.js"></script>
+		
     </body>
 </html>
