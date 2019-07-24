@@ -129,7 +129,7 @@ MLP.prototype = {
             //var randIndex = Math.floor(Math.random() * this.trainingdatas.length);
             //var data = this.trainingdatas[randIndex];
                 if(debug)console.log("AUTRE ECHANTILLON", data.input,"<=>", data.output);
-                var evaluation = this.evaluate(data.input, debug);
+                this.evaluate(data.input, debug);
                 for(var q = 0; q < this.n_layers; q++) {
                     var currentLayerIndex = this.n_layers - q - 1 ;
                     var layer = this.getLayerAtIndex(currentLayerIndex);

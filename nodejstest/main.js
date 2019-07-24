@@ -55,7 +55,7 @@ function doTest() {
         {input : [0, 1, 0, 1], output : [0, 1, 1]},
         {input : [0, 1, 0, 1], output : [0, 1, 1]}
     ]);*/
-    var epoques = 2000;
+    var epoques = 500;
     var taux_app = 0.01; // plus c est petit => plus c est precis
     mlp.train(epoques, taux_app);
 
