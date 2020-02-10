@@ -83,6 +83,7 @@ MLP.prototype = {
     evaluate: function(input_, _debug) {
         // retourne un vecteur du perceptron de sortie
         var out = [];
+		
         for(var i = 0; i < this.n_layers; i++) {
             var tmp_neurons = this.getLayerAtIndex(i);
             var input = null;
@@ -92,10 +93,9 @@ MLP.prototype = {
             } else {
                 // output de la couche precedente
                 input = out;
+				out = [];
             }
-            if(i+1 <= this.n_layers) {
-                out = [];
-            }
+			
             if(_debug) {
                 console.log("Layer ", i);
             }
@@ -116,62 +116,71 @@ MLP.prototype = {
                }
             });
         }
+		
         return out;
     },
     train: function(generation, alpha) {
+		console.log("Layer ", this.getLayerAtIndex(0).length);
         var time = 0;
         while(time < generation) {
-            var debug = time % 50 == 0 && false;// on peut effacer && false en passant
-            if(debug )console.log("GENERATION ", time);
 
-            this.trainingdatas.forEach(data =>{
+            
             // decommenter si on veut piocher les echantillons aleatoirement
             //var randIndex = Math.floor(Math.random() * this.trainingdatas.length);
             //var data = this.trainingdatas[randIndex];
-                if(debug)console.log("AUTRE ECHANTILLON", data.input,"<=>", data.output);
-                this.evaluate(data.input, debug);
+				
                 for(var q = 0; q < this.n_layers; q++) {
+					// on commence par la derniere couche et on backpropage
                     var currentLayerIndex = this.n_layers - q - 1 ;
                     var layer = this.getLayerAtIndex(currentLayerIndex);
-                    var j = 0;
-                    layer.forEach(neuron_j => {
-                        var delta_j = 0;
-                        var yj = neuron_j.getSigmoidOutput();
-                        var yi = 0;
-                        if(q == 0) {
-                            // layer le plus haut
-                            var uj = data.output[j];
-                            delta_j = (uj - yj ) * yj * (1 - yj);
-                        } else {
-
-                            var sum_delta_destination = 0;
-                            var destlayer = this.getLayerAtIndex(currentLayerIndex + 1);
-                            for(var k = 0; k < destlayer.length; k++){
-                                var tmp_neuron = destlayer[k]; // le k ieme neurone
-                                // ds = ds + delta(k) * destNeurone(k).weight[j]
-                                sum_delta_destination += tmp_neuron.minidelta * tmp_neuron.weight[j];
-                            }
-                            delta_j = yj * (1 - yj ) * sum_delta_destination;
-                        }
-                        // permettra de garder son delta pour la couche qui lui precede
-                        neuron_j.minidelta = delta_j;
-                        var noperation = neuron_j.weight.length;
-                        for (let i = 0; i < noperation; i++) {
-                            if(q == 0) {
-                                // premiere couche
-                                neuron_j.weight[i] +=  alpha * delta_j * yj;
-                            } else {
-                                // couche cachee
-                                // c est la connexion entre le neurone actuel j et son precedent-i
-                                yi = neuron_j.input[i];
-                                neuron_j.weight[i] +=  alpha * delta_j * yi;
-                            }
-                        }
-                        j++;
-                    });
-
+					
+					for(let j = 0; j < layer.length; j++) {
+						let neuron_j = layer[j];
+						
+						let that = this;
+						this.trainingdatas.forEach(data =>{
+							
+							that.evaluate(data.input, false);
+							
+							var delta_j = 0;
+							var yj = neuron_j.getSigmoidOutput();
+							var yi = 0;
+							if(q == 0) {
+								// layer le plus haut
+								// couche de sortie
+								var uj = data.output[j];
+								delta_j = (uj - yj ) * yj * (1 - yj);
+							} else {
+								// couche cachee
+								var sum_delta_destination = 0;
+								var destlayer = this.getLayerAtIndex(currentLayerIndex + 1);
+								for(var k = 0; k < destlayer.length; k++){
+									var tmp_neuron = destlayer[k]; // le k ieme neurone
+									// ds = ds + delta(k) * destNeurone(k).weight[j]
+									sum_delta_destination += tmp_neuron.minidelta * tmp_neuron.weight[j];
+								}
+								delta_j = yj * (1 - yj ) * sum_delta_destination;
+								//console.log(delta_j);
+							}
+							// permettra de garder son delta pour la couche qui lui precede
+							neuron_j.minidelta = delta_j;
+							let avg  = 1 / that.trainingdatas.length;
+							
+							for (let i = 0; i < neuron_j.weight.length; i++) {
+								if(q == 0) {
+									// premiere couche
+									neuron_j.weight[i] += avg * alpha * delta_j * yj;
+								} else {
+									// couche cachee
+									// c est la connexion entre le neurone actuel j et son precedent-i
+									yi = neuron_j.input[i];
+									neuron_j.weight[i] +=  avg * alpha * delta_j * yi;
+								}
+							}
+						});
+					}
                 }
-            });
+            
             time++;
         }
         console.log("Training done...!");

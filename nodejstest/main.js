@@ -39,13 +39,13 @@ function doTest() {
     //  c. entree(le premier indice), ..., ... , c. sortie 
 	// (le dernier indice => doit etre de meme nombre que l output)
     var mlp = new MLP({
-        n_neuron_per_layers : [10, 10, 10],
+        n_neuron_per_layers : [10, 10, 10, 3],
         n_inputs : 4
     });
-    var input_length = 4, output_length = 10, numberOfdatas = 100;
+    var input_length = 4, output_length = 3, numberOfdatas = 10;
     mlp.init();
-    mlp.setTrainingdatas(generateRandomDatas(input_length, output_length, numberOfdatas));
-    /*
+    //mlp.setTrainingdatas(generateRandomDatas(input_length, output_length, numberOfdatas));
+    
     mlp.setTrainingdatas([
         // entree et ce que l on voudrait avoir
         {input : [1, 0, 0, 1], output : [1, 0, 1]},
@@ -54,10 +54,13 @@ function doTest() {
         {input : [0, 0, 0, 1], output : [1, 1, 1]},
         {input : [0, 1, 0, 1], output : [0, 1, 1]},
         {input : [0, 1, 0, 1], output : [0, 1, 1]}
-    ]);*/
-    var epoques = 500;
+    ]);
+	
+    var epoques = 100;
     var taux_app = 0.01; // plus c est petit => plus c est precis
     mlp.train(epoques, taux_app);
+	
+	console.log(mlp);
 
     var datas = mlp.getTrainingdatas();
     //console.log(datas);
@@ -68,6 +71,11 @@ function doTest() {
         var input = data.input;
         var attendue = data.output;
         var computed = mlp.evaluate(input, false);
+		console.log(attendue, " VS ",computed.map(e => {
+			let vg = (""+e).split(".");
+			let temp = vg[0] + "." + vg[1].substring(0, 3);
+			return eval(temp);
+		}));
         var isOk = true;
         var isTotalyOk = true;
         var bin_pass = attendue.length;

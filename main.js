@@ -9,7 +9,7 @@ function reinitDrawing() {
 function reinitAllData() {
 	dataToLearn = {
 		data_vector : [],
-		step : 1000, // Nombre d apprentissage par defaut
+		step : 100, // Nombre d apprentissage par defaut
 		n_output : n_output,
 		learning_rate : 0.01,
 		layers : [40, 20, n_output] // structure du reseaux
